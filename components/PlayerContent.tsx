@@ -22,7 +22,7 @@ const PlayerContent: React.FC<PlayerContentProps> = ({
   songUrl
 }) => {
   const player  = usePlayer();
-  const [volume, setVolume] = useState(0.3);
+  const [volume, setVolume] = useState(0.5);
   const [isPlaying, setIsPlaying]= useState(false);
   const [duration, setDuration] = useState(0); 
   const [progress, setProgress] = useState(0); 
@@ -80,17 +80,17 @@ const PlayerContent: React.FC<PlayerContentProps> = ({
   );
 
   // Update the progress as the song plays
-  useEffect(() => {
-    const interval = setInterval(() => {
-      if (sound && isPlaying) {
-        setProgress((sound.seek() / duration) * 100);  // Update progress percentage
-        console.log("song prgress...................",(sound.seek() / duration) * 100);
-        if(duration) console.log("song duration...................",duration);
-      }
-    }, 1000);
+  // useEffect(() => {
+  //   const interval = setInterval(() => {
+  //     if (sound && isPlaying) {
+  //       setProgress((sound.seek() / duration) * 100);  // Update progress percentage
+  //       console.log("song prgress...................",(sound.seek() / duration) * 100);
+  //       if(duration) console.log("song duration...................",duration);
+  //     }
+  //   }, 1000);
 
-    return () => clearInterval(interval);
-  }, [sound, duration]);
+  //   return () => clearInterval(interval);
+  // }, [sound, duration]);
 
   useEffect(() => {
     sound?.play();

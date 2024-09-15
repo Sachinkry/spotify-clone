@@ -10,6 +10,8 @@ import MediaItem from "./MediaItem";
 import useOnPlay from "@/hooks/useOnPlay";
 import PlayButton from "./PlayButton";
 import { FaPlay } from "react-icons/fa";
+import useSubscribeModal from "@/hooks/useSubscribeModal";
+import toast from "react-hot-toast";
 
 interface LibraryProps {
   songs: Song[]
@@ -18,10 +20,11 @@ interface LibraryProps {
 const Library: React.FC<LibraryProps> = ({
   songs
 }) => {
+  const subscribeModal = useSubscribeModal();
   const authModal = useAuthModal();
   const uploadModal = useUploadModal();
 
-  const { user } = useUser();
+  const { user, subscription } = useUser();
 
   const onPlay = useOnPlay(songs);
 
@@ -30,6 +33,10 @@ const Library: React.FC<LibraryProps> = ({
       return authModal.onOpen();
     }
     //TODO: check for subscription
+    if (!subscription) {
+      toast('Subscribe to add songs to your library.', {icon: '⚠️',})
+      return subscribeModal.onOpen();
+    }
     return uploadModal.onOpen();
   };
 
